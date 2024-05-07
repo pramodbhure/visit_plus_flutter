@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "963373003153",
+    "project_id": "visit-plus-app-sf65u7",
+    "storage_bucket": "visit-plus-app-sf65u7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963373003153:android:37b54a70f0a370e1fbea30",
+        "android_client_info": {
+          "package_name": "com.example.visitplusapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZlXu1BOHy6z1RNa-sSeSJa5VKA1qHy-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
