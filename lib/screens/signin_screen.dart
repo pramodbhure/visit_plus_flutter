@@ -27,17 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  hexStringToColor("ffffffff"),
-                  hexStringToColor("ffffffff"),
-                  hexStringToColor("ffffffff")
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+            color: Colors.white,
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
