@@ -1,5 +1,3 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/material.dart';
 
 Image logoWidget(String imageName) {
@@ -52,15 +50,16 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
       onPressed: () {
         onTap();
       },
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all<Color>(const Color(0xFF73C2EF)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
       child: Text(
         title,
         style: const TextStyle(
             color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
       ),
-      style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF73C2EF)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
     ),
   );
 }
