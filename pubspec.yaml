@@ -1,14 +1,16 @@
 name: visitplusapp
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: ">=3.3.4 <4.0.0"
 
 dependencies:
   firebase_core: ^2.30.1
   firebase_auth: ^4.19.4
+  firebase_database: ^10.5.4
+  google_sign_in: ^5.0.7
   flutter:
     sdk: flutter
 
@@ -19,3 +21,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/facebook.png
+    - assets/Google.webp
+    - assets/linkedin.png
