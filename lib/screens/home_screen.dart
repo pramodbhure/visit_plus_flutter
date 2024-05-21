@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:visitplusapp/dashboard-widgets/CategoryIcon.dart';
 import 'package:visitplusapp/dashboard-widgets/DoctorCard.dart';
@@ -13,9 +14,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final DatabaseReference _doctorsRef =
-      FirebaseDatabase.instance.ref().child('doctors');
-  List<Map<dynamic, dynamic>> _doctors = [];
+  final CollectionReference _doctorsRef =
+      FirebaseFirestore.instance.collection('doctors');
+  List<Map<String, dynamic>> _doctors = [];
+  late StreamSubscription<QuerySnapshot> _subscription;
 
   @override
   void initState() {
@@ -23,17 +25,28 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchDoctors();
   }
 
+  @override
+  void dispose() {
+    // Cancel the subscription when the widget is disposed
+    _subscription.cancel();
+    super.dispose();
+  }
+
   void _fetchDoctors() {
-    _doctorsRef.onValue.listen((DatabaseEvent event) {
-      DataSnapshot snapshot = event.snapshot;
-      List<Map<dynamic, dynamic>> fetchedDoctors = [];
-      for (var doctor in snapshot.children) {
-        fetchedDoctors.add(doctor.value as Map<dynamic, dynamic>);
+    _subscription = _doctorsRef.snapshots().listen((QuerySnapshot snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        List<Map<String, dynamic>> fetchedDoctors = snapshot.docs
+            .map((doc) => doc.data() as Map<String, dynamic>)
+            .toList();
+        setState(() {
+          _doctors = fetchedDoctors;
+          print('Fetched doctors: $_doctors'); // Log fetched data
+        });
+      } else {
+        print('No doctors found.');
       }
-      setState(() {
-        _doctors = fetchedDoctors;
-        print('Fetched doctors: $_doctors'); // Log fetched data
-      });
+    }, onError: (error) {
+      print('Error fetching doctors: $error');
     });
   }
 
@@ -60,13 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Icon(Icons.menu, color: Colors.black),
                   ),
                   actions: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      // child: CircleAvatar(
-                      //   backgroundImage:
-                      //       NetworkImage('https://example.com/profile.jpg'),
-                      // ),
-                    ),
                     IconButton(
                       icon: const Icon(Icons.logout, color: Colors.black),
                       onPressed: () {
@@ -177,11 +183,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
                           child: DoctorCard(
-                            name: doctor['name'],
-                            specialization: doctor['specialization'],
-                            rating: (doctor['rating'] as num).toDouble(),
-                            imageUrl: doctor['imageUrl'],
-                          ),
+                              name: doctor['name'],
+                              specialization: doctor['specialization'],
+                              rating:
+                                  (doctor['rating'] as num?)?.toDouble() ?? 0.0,
+                              imageUrl: doctor['imageUrl']),
                         );
                       },
                     ),
