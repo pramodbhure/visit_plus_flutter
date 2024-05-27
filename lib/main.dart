@@ -1,19 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:visitplusapp/firebase_options.dart';
-import 'package:visitplusapp/screens/signin_screen.dart';
+import 'firebase_options.dart';
+import 'screens/signin_screen.dart';
 
 void main() async {
-  // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    name: 'visit-plus-app',
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Check platform
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } else {
+    await Firebase.initializeApp(
+      name: 'visit-plus-app',
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
-  // Run your app
   runApp(const MyApp());
 }
 
