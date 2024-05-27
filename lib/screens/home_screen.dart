@@ -7,7 +7,7 @@ import 'package:visitplusapp/dashboard-widgets/DoctorCard.dart';
 import 'package:visitplusapp/screens/signin_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

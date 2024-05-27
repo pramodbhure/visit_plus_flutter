@@ -5,7 +5,7 @@ class CategoryIcon extends StatelessWidget {
   final String label;
   final Color iconColor;
 
-  const CategoryIcon({
+  const CategoryIcon({super.key, 
     required this.icon,
     required this.label,
     required this.iconColor,

@@ -6,7 +6,7 @@ class DoctorCard extends StatelessWidget {
   final double rating;
   final String imageUrl;
 
-  DoctorCard({
+  const DoctorCard({super.key, 
     required this.name,
     required this.specialization,
     required this.rating,
