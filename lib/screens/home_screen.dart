@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:visitplusapp/dashboard-widgets/CategoryIcon.dart';
 import 'package:visitplusapp/dashboard-widgets/DoctorCard.dart';
+import 'package:visitplusapp/screens/bottom_navigation_bar.dart';
 import 'package:visitplusapp/screens/signin_screen.dart';
+import 'package:visitplusapp/screens/doctor_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,6 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> categories = [
+      {'icon': Icons.category, 'label': 'All', 'color': Colors.green[200]},
+      {
+        'icon': Icons.favorite_border,
+        'label': 'Cardiology',
+        'color': Colors.red[200]
+      },
+      {
+        'icon': Icons.medical_services,
+        'label': 'Medicine',
+        'color': Colors.purple[200]
+      },
+      {'icon': Icons.healing, 'label': 'General', 'color': Colors.red[200]},
+    ];
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(350),
@@ -148,27 +165,13 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CategoryIcon(
-                      icon: Icons.category,
-                      label: 'All',
-                      iconColor: Colors.green[200] ?? Colors.green),
-                  CategoryIcon(
-                    icon: Icons.favorite_border,
-                    label: 'Cardiology',
-                    iconColor: Colors.red[200] ?? Colors.red,
-                  ),
-                  CategoryIcon(
-                    icon: Icons.medical_services,
-                    label: 'Medicine',
-                    iconColor: Colors.purple[200] ?? Colors.purple,
-                  ),
-                  CategoryIcon(
-                    icon: Icons.healing,
-                    label: 'General',
-                    iconColor: Colors.red[200] ?? Colors.red,
-                  ),
-                ],
+                children: categories.map((category) {
+                  return CategoryIcon(
+                    icon: category['icon'],
+                    label: category['label'],
+                    iconColor: category['color'] ?? Colors.green,
+                  );
+                }).toList(),
               ),
             ),
             const SizedBox(height: 20),
@@ -183,11 +186,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
                           child: DoctorCard(
-                              name: doctor['name'],
-                              specialization: doctor['specialization'],
-                              rating:
-                                  (doctor['rating'] as num?)?.toDouble() ?? 0.0,
-                              imageUrl: doctor['imageUrl']),
+                            name: doctor['name'],
+                            specialization: doctor['specialization'],
+                            rating:
+                                (doctor['rating'] as num?)?.toDouble() ?? 0.0,
+                            imageUrl: doctor['imageUrl'],
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorProfileScreen(
+                                    doctor: doctor,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
@@ -195,29 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-      ),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
     );
   }
 }
