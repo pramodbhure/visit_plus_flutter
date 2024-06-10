@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:visitplusapp/widget/AppointmentSection.dart';
 import 'package:visitplusapp/widget/DoctorDetailsCard.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   final Map<String, dynamic> doctor;
 
+  // ignore: use_super_parameters
   const DoctorProfileScreen({Key? key, required this.doctor}) : super(key: key);
 
   @override
@@ -112,72 +114,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Center(
-                child: Column(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: Image.asset(
-                        'assets/hospital.jpeg',
-                        width: 332,
-                        height: 172,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "You can book\n the appointment right now!",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Implement your action here
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        fixedSize: const Size(332, 58),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      child: const Column(
-                        children: [
-                          Text(
-                            "Queue Me Up",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          Text(
-                            "(20 patients in the queue)",
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {
-                        // Implement your action here
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.lightBlue, // Background color
-                        fixedSize: const Size(332, 58),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      child: const Text(
-                        "Schedule Appointment",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const AppointmentSection(), // Use the new widget here
             ],
           ),
         ),
