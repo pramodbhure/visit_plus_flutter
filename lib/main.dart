@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:visitplusapp/screens/signin_screen.dart';
-import 'package:visitplusapp/widget/CustomSmoothPageIndicator.dart';
-import 'package:visitplusapp/widget/welcomeScreen1.dart';
-import 'package:visitplusapp/widget/welcomeScreen2.dart';
-import 'package:visitplusapp/widget/welcomeScreen3.dart';
+import 'package:visitplusapp/authentication-widgets/signin_screen.dart';
+import 'package:visitplusapp/reusable_widget/CustomSmoothPageIndicator.dart';
+import 'package:visitplusapp/welcome-widgets/welcomeScreen1.dart';
+import 'package:visitplusapp/welcome-widgets/welcomeScreen2.dart';
+import 'package:visitplusapp/welcome-widgets/welcomeScreen3.dart';
 import 'firebase_options.dart';
 
 void main() async {

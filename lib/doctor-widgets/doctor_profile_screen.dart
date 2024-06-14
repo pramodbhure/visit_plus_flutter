@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:visitplusapp/widget/AppointmentSection.dart';
-import 'package:visitplusapp/widget/DoctorDetailsCard.dart';
+import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
+import 'package:visitplusapp/appointments-widgets/AppointmentSection.dart';
+import 'package:visitplusapp/doctor-widgets/DoctorDetailsCard.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
-  final Map<String, dynamic> doctor;
-
+  final Doctor doctor; // Change type to Doctor
   // ignore: use_super_parameters
   const DoctorProfileScreen({Key? key, required this.doctor}) : super(key: key);
 
@@ -37,7 +37,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
-                        'assets/profile.png',
+                        '${doctor.imageUrl}',
                         width: 100,
                         height: 93,
                       ),
@@ -47,7 +47,7 @@ class DoctorProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                doctor['name'],
+                doctor.name,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -104,17 +104,15 @@ class DoctorProfileScreen extends StatelessWidget {
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text:
-                                'Dr. ${doctor['name']} is the topmost Cardiologist specialist in Nanyang Hospital at London. '
-                                'She is available for private consultation.',
-                          ),
+                              text:
+                                  'Dr. ${doctor.name} is the ${doctor.description}'),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              const AppointmentSection(), // Use the new widget here
+              AppointmentSection(doctorId: doctor.id), // Pass doctorId here
             ],
           ),
         ),

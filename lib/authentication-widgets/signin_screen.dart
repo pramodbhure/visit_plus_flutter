@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:visitplusapp/screens/home_screen.dart';
-import 'package:visitplusapp/widget/header.dart';
-import 'package:visitplusapp/widget/sign_in_form.dart';
-import 'package:visitplusapp/widget/sign_up_option.dart';
-import 'package:visitplusapp/widget/social_sign_in_buttons.dart';
+import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
+import 'package:visitplusapp/dashboard-widgets/header.dart';
+import 'package:visitplusapp/authentication-widgets/sign_in_form.dart';
+import 'package:visitplusapp/authentication-widgets/sign_up_option.dart';
+import 'package:visitplusapp/authentication-widgets/social_sign_in_buttons.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

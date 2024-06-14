@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:visitplusapp/reusable_widget/reusable_widget.dart';
-import 'package:visitplusapp/screens/home_screen.dart';
-import 'package:visitplusapp/screens/reset_password.dart';
+import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
+import 'package:visitplusapp/authentication-widgets/reset_password.dart';
 
 class SignInForm extends StatelessWidget {
   final TextEditingController emailTextController;

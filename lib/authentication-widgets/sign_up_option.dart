@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:visitplusapp/screens/signup_screen.dart';
+import 'package:visitplusapp/authentication-widgets/signup_screen.dart';
 
 class SignUpOption extends StatelessWidget {
   const SignUpOption({super.key});
