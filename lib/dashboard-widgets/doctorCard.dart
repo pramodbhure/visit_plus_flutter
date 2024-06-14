@@ -1,87 +1,101 @@
 import 'package:flutter/material.dart';
 
-class DoctorCard extends StatelessWidget {
+class Doctor extends StatelessWidget {
+  final String id;
   final String name;
   final String specialization;
+  final String description;
+  final String address;
   final double rating;
-  final String imageUrl;
+  final String? imageUrl;
   final VoidCallback? onTap;
 
-  const DoctorCard({
+  const Doctor({
+    required this.id,
     required this.name,
     required this.specialization,
     required this.rating,
-    required this.imageUrl,
+    required this.description,
+    required this.address,
+    this.imageUrl,
     this.onTap,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
+
+  static const String defaultImageUrl =
+      'https://images.freeimages.com/images/large-previews/711/medical-doctor-1236694.jpg';
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(0), // Existing padding outside the Card
-      child: GestureDetector(
-        onTap: onTap,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 4,
-          child: Padding(
-            // Added padding inside the Card
-            padding:
-                const EdgeInsets.all(8.0), // Adjust the inner padding as needed
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(imageUrl),
-                    ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(name,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
-                        Text(specialization,
-                            style: TextStyle(color: Colors.grey[700])),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: Colors.yellow),
-                        const SizedBox(width: 5),
-                        Text(rating.toString(),
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const SizedBox(width: 20), // Adjust the width as needed
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        minimumSize:
-                            const Size(0, 40), // Makes the button full width
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10), // Adjust border radius here
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: imageUrl != null
+                        ? NetworkImage(imageUrl!)
+                        : NetworkImage(defaultImageUrl),
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                      child: const Text('Appointment'),
+                      Text(
+                        specialization,
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.yellow),
+                      const SizedBox(width: 5),
+                      Text(
+                        rating.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Implement appointment functionality here
+                      // For example, navigate to an appointment screen
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(0, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                    child: const Text('Appointment'),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

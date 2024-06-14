@@ -1,12 +1,15 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:visitplusapp/dashboard-widgets/CategoryIcon.dart';
-import 'package:visitplusapp/dashboard-widgets/DoctorCard.dart';
-import 'package:visitplusapp/screens/bottom_navigation_bar.dart';
-import 'package:visitplusapp/screens/signin_screen.dart';
-import 'package:visitplusapp/screens/doctor_profile_screen.dart';
+import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
+
+import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
+import 'package:visitplusapp/authentication-widgets/signin_screen.dart';
+import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,37 +21,51 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final CollectionReference _doctorsRef =
       FirebaseFirestore.instance.collection('doctors');
-  List<Map<String, dynamic>> _doctors = [];
+  List<Doctor> _doctors = [];
   late StreamSubscription<QuerySnapshot> _subscription;
 
   @override
   void initState() {
     super.initState();
-    _fetchDoctors();
+    _subscribeToDoctors();
   }
 
   @override
   void dispose() {
-    // Cancel the subscription when the widget is disposed
     _subscription.cancel();
     super.dispose();
   }
 
-  void _fetchDoctors() {
+  void _subscribeToDoctors() {
     _subscription = _doctorsRef.snapshots().listen((QuerySnapshot snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        List<Map<String, dynamic>> fetchedDoctors = snapshot.docs
-            .map((doc) => doc.data() as Map<String, dynamic>)
-            .toList();
+        List<Doctor> fetchedDoctors = snapshot.docs.map((doc) {
+          // Cast doc.data() to Map<String, dynamic> to access containsKey method
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+          // Check if the document contains the 'imageUrl' field
+          String imageUrl = data.containsKey('imageUrl')
+              ? data['imageUrl'] as String // Use imageUrl if present
+              : Doctor.defaultImageUrl; // Use defaultImageUrl if not present
+
+          return Doctor(
+              id: doc.id,
+              name: data['name'] ?? 'Unknown',
+              specialization: data['specialization'] ?? 'General',
+              rating: (data['rating'] as num?)?.toDouble() ?? 0.0,
+              imageUrl: imageUrl,
+              description: data['description'] ?? "",
+              address: data['address'] ?? "");
+        }).toList();
         setState(() {
           _doctors = fetchedDoctors;
-          print('Fetched doctors: $_doctors'); // Log fetched data
         });
       } else {
         print('No doctors found.');
       }
     }, onError: (error) {
       print('Error fetching doctors: $error');
+      // Handle error state if needed
     });
   }
 
@@ -78,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
             bottomRight: Radius.circular(20),
           ),
           child: Container(
-            color: Colors.blue[200], // Set the background color to blue
+            color: Colors.blue[200],
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -185,20 +202,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
-                          child: DoctorCard(
-                            name: doctor['name'],
-                            specialization: doctor['specialization'],
-                            rating:
-                                (doctor['rating'] as num?)?.toDouble() ?? 0.0,
-                            imageUrl: doctor['imageUrl'],
+                          child: Doctor(
+                            id: doctor.id,
+                            name: doctor.name,
+                            specialization: doctor.specialization,
+                            rating: doctor.rating,
+                            imageUrl: doctor.imageUrl,
+                            description: doctor.description,
+                            address: doctor.address,
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DoctorProfileScreen(
-                                    doctor: doctor,
-                                  ),
-                                ),
+                                    builder: (context) =>
+                                        DoctorProfileScreen(doctor: doctor)),
                               );
                             },
                           ),

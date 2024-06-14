@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:visitplusapp/reusable_widget/reusable_widget.dart';
-import 'package:visitplusapp/screens/home_screen.dart';
+import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

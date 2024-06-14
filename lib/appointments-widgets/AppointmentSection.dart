@@ -1,8 +1,13 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import '../screens/calender/CalendarSection.dart';
+import 'CalendarSection.dart';
 
 class AppointmentSection extends StatefulWidget {
-  const AppointmentSection({Key? key}) : super(key: key);
+  final String doctorId; // Add doctorId parameter
+
+  const AppointmentSection({Key? key, required this.doctorId})
+      : super(key: key);
 
   @override
   _AppointmentSectionState createState() => _AppointmentSectionState();
@@ -20,7 +25,7 @@ class _AppointmentSectionState extends State<AppointmentSection> {
   @override
   Widget build(BuildContext context) {
     return showCalendar
-        ? const CalendarSection()
+        ? CalendarSection(doctorId: widget.doctorId)
         : Center(
             child: Column(
               children: [
