@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
 import 'package:visitplusapp/dashboard-widgets/header.dart';
@@ -36,6 +37,35 @@ class _SignInScreenState extends State<SignInScreen> {
             await _auth.signInWithCredential(credential);
         final User? user = authResult.user;
         if (user != null) {
+          // Fetch user's location
+          bool serviceEnabled;
+          LocationPermission permission;
+
+          // Test if location services are enabled.
+          serviceEnabled = await Geolocator.isLocationServiceEnabled();
+          if (!serviceEnabled) {
+            return null;
+          }
+
+          permission = await Geolocator.checkPermission();
+          if (permission == LocationPermission.denied) {
+            permission = await Geolocator.requestPermission();
+            if (permission == LocationPermission.denied) {
+              return null;
+            }
+          }
+
+          if (permission == LocationPermission.deniedForever) {
+            // Permissions are denied forever, handle appropriately.
+            return null;
+          }
+
+          Position position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high);
+
+          print(
+              'Latitude: ${position.latitude}, Longitude: ${position.longitude}');
+
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),

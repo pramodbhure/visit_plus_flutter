@@ -37,7 +37,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
-                        '${doctor.imageUrl}',
+                        'asset/doctor1.png',
                         width: 100,
                         height: 93,
                       ),
