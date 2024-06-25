@@ -1,6 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,8 @@ import 'package:visitplusapp/dashboard-widgets/CategoryIcon.dart';
 import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
 
 import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
-import 'package:visitplusapp/authentication-widgets/signin_screen.dart';
 import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
+import 'package:visitplusapp/mapWidgets/map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CollectionReference _doctorsRef =
-      FirebaseFirestore.instance.collection('doctors');
+      FirebaseFirestore.instance.collection('apiResponcedoctors');
   List<Doctor> _doctors = [];
   late StreamSubscription<QuerySnapshot> _subscription;
 
@@ -40,13 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
     _subscription = _doctorsRef.snapshots().listen((QuerySnapshot snapshot) {
       if (snapshot.docs.isNotEmpty) {
         List<Doctor> fetchedDoctors = snapshot.docs.map((doc) {
-          // Cast doc.data() to Map<String, dynamic> to access containsKey method
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-          // Check if the document contains the 'imageUrl' field
           String imageUrl = data.containsKey('imageUrl')
-              ? data['imageUrl'] as String // Use imageUrl if present
-              : Doctor.defaultImageUrl; // Use defaultImageUrl if not present
+              ? data['imageUrl'] as String
+              : Doctor.defaultImageUrl;
 
           return Doctor(
               id: doc.id,
@@ -65,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }, onError: (error) {
       print('Error fetching doctors: $error');
-      // Handle error state if needed
     });
   }
 
@@ -115,9 +111,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SignInScreen()),
+                                builder: (context) => MapScreen()),
                           );
                         });
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.map, color: Colors.black),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapScreen()),
+                        );
                       },
                     ),
                   ],
