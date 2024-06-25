@@ -8,7 +8,7 @@ import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
 
 import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
 import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
-import 'package:visitplusapp/map%20widgets/map_screen.dart';
+import 'package:visitplusapp/mapWidgets/map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
