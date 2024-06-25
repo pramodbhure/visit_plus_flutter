@@ -51,17 +51,37 @@ class Doctor extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                      Container(
+                        width: 200, // Adjust the width as needed
+                        child: Text(
+                          name.length > 20
+                              ? '${name.substring(0, 20)}...'
+                              : name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: false,
                         ),
                       ),
-                      Text(
-                        specialization,
-                        style: TextStyle(color: Colors.grey[700]),
+                      Container(
+                        width: 200, // Adjust the width as needed
+                        child: Text(
+                          specialization.length > 20
+                              ? '${specialization.substring(0, 20)}...'
+                              : specialization,
+                          style: TextStyle(color: Colors.grey[700]),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          softWrap: false,
+                        ),
                       ),
+                      // Text(
+                      //   specialization,
+                      //   style: TextStyle(color: Colors.grey[700]),
+                      // ),
                     ],
                   ),
                 ],

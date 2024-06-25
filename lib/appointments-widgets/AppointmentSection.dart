@@ -47,7 +47,7 @@ class _AppointmentSectionState extends State<AppointmentSection> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 50),
                 ElevatedButton(
                   onPressed: () {
                     // Implement your action here

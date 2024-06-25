@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CollectionReference _doctorsRef =
-      FirebaseFirestore.instance.collection('doctors');
+      FirebaseFirestore.instance.collection('apiResponcedoctors');
   List<Doctor> _doctors = [];
   late StreamSubscription<QuerySnapshot> _subscription;
 
