@@ -8,7 +8,6 @@ import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
 
 import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
 import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
-import 'package:visitplusapp/mapWidgets/map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,23 +107,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut().then((value) {
                           print("Signed Out");
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MapScreen()),
-                          );
                         });
                       },
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.map, color: Colors.black),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MapScreen()),
-                        );
-                      },
-                    ),
+                    // IconButton(
+                    //   icon: const Icon(Icons.map, color: Colors.black),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => MapScreen()),
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
                 Padding(
