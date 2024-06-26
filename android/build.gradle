@@ -1,11 +1,12 @@
 buildscript {
+    ext.kotlin_version = '2.0.0'  // Replace with the latest version
     repositories {
         google()  // Google's Maven repository
         mavenCentral()  // Maven Central repository
     }
 
     dependencies {
-        // Add the Maven coordinates and latest version of the plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.4.1'
     }
 }
