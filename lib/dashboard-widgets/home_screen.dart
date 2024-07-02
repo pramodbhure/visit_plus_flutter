@@ -1,11 +1,8 @@
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:visitplusapp/dashboard-widgets/CategoryIcon.dart';
+import 'package:visitplusapp/dashboard-widgets/categoryIcon.dart';
 import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
-
 import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
 import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
 
@@ -67,163 +64,225 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {'icon': Icons.category, 'label': 'All', 'color': Colors.green[200]},
       {
-        'icon': Icons.favorite_border,
+        'imagePath': 'assets/all.png',
+        'label': 'All',
+      },
+      {
+        'imagePath': 'assets/heart.png',
         'label': 'Cardiology',
-        'color': Colors.red[200]
       },
       {
-        'icon': Icons.medical_services,
+        'imagePath': 'assets/tablet.png',
         'label': 'Medicine',
-        'color': Colors.purple[200]
       },
-      {'icon': Icons.healing, 'label': 'General', 'color': Colors.red[200]},
+      {
+        'imagePath': 'assets/boy.png',
+        'label': 'Pediatrician',
+      },
+      {
+        'imagePath': 'assets/boy.png',
+        'label': 'General',
+      },
+      {
+        'imagePath': 'assets/boy.png',
+        'label': 'Pediatrician',
+      },
+      // Add more categories as needed
     ];
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(350),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+      appBar: AppBar(
+        backgroundColor: Colors.blue[200], // Blue background color
+        elevation: 0,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/menu.png', // Replace with your menu icon asset path
+            width: 24,
+            height: 24,
+            color: Colors.black,
           ),
-          child: Container(
-            color: Colors.blue[200],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  leading: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.menu, color: Colors.black),
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.logout, color: Colors.black),
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut().then((value) {
-                          print("Signed Out");
-                        });
-                      },
-                    ),
-                    // IconButton(
-                    //   icon: const Icon(Icons.map, color: Colors.black),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => MapScreen()),
-                    //     );
-                    //   },
-                    // ),
-                  ],
+        ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: Colors.white, // White background color
+              borderRadius: BorderRadius.circular(20.0), // Rounded corners
+              image: const DecorationImage(
+                image: AssetImage('assets/doctor1.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+        ],
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 250.0,
+            pinned: true,
+            leading: const SizedBox(), // Removed leading from SliverAppBar
+            flexibleSpace: FlexibleSpaceBar(
+              background: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-                  child: Column(
+                child: Container(
+                  color: Colors.blue[200],
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Welcome Back',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(16.0, 5.0, 16.0, 5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome Back',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                                height:
+                                    30.0), // Adjusted height to create space for search bar
+                            Text(
+                              'Let\'s find your top doctor!',
+                              style: TextStyle(
+                                fontSize: 36,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const Text(
-                        'Let\'s find your top doctor!',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.search),
-                          hintText: 'Search health issue.......',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                      ),
+                      SizedBox(
+                          height:
+                              30.0), // Adjusted height to create space for search bar
                     ],
                   ),
                 ),
-              ],
+              ),
+            ),
+            bottom: PreferredSize(
+              preferredSize:
+                  const Size(0, 36), // Adjusted height to cover entire app bar
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue[200], // Blue background color
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20.0),
+                    bottomRight: Radius.circular(20.0),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                      16.0, 16.0, 16.0, 16.0), // Added top and bottom padding
+                  child: Container(
+                    height: 60.0,
+                    alignment: Alignment.center,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: const ImageIcon(
+                          AssetImage(
+                              'assets/search.png'), // Replace with your search icon image path
+                          color: Colors
+                              .grey, // Optionally set the color of the icon
+                        ),
+                        hintText: 'Search health issue.......',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-              child: Text(
-                'Categories',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: categories.map((category) {
-                  return CategoryIcon(
-                    icon: category['icon'],
-                    label: category['label'],
-                    iconColor: category['color'] ?? Colors.green,
-                  );
-                }).toList(),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: _doctors.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      itemCount: _doctors.length,
-                      itemBuilder: (context, index) {
-                        final doctor = _doctors[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 16.0),
-                          child: Doctor(
-                            id: doctor.id,
-                            name: doctor.name,
-                            specialization: doctor.specialization,
-                            rating: doctor.rating,
-                            imageUrl: doctor.imageUrl,
-                            description: doctor.description,
-                            address: doctor.address,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        DoctorProfileScreen(doctor: doctor)),
-                              );
-                            },
-                          ),
-                        );
-                      },
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+                    child: Text(
+                      'Categories',
+                      style: TextStyle(fontSize: 20),
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: categories.map((category) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: CategoryIcon(
+                              imagePath: category['imagePath'],
+                              label: category['label'],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          _doctors.isEmpty
+              ? SliverFillRemaining(
+                  child: const Center(child: CircularProgressIndicator()),
+                )
+              : SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final doctor = _doctors[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: Doctor(
+                          id: doctor.id,
+                          name: doctor.name,
+                          specialization: doctor.specialization,
+                          rating: doctor.rating,
+                          imageUrl: doctor.imageUrl,
+                          description: doctor.description,
+                          address: doctor.address,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DoctorProfileScreen(doctor: doctor)),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    childCount: _doctors.length,
+                  ),
+                ),
+        ],
       ),
       bottomNavigationBar: const CustomBottomNavigationBar(),
     );

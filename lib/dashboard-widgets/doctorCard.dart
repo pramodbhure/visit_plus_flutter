@@ -22,71 +22,70 @@ class Doctor extends StatelessWidget {
     super.key,
   });
 
-  static const String defaultImageUrl =
-      'https://images.freeimages.com/images/large-previews/711/medical-doctor-1236694.jpg';
+  static const String defaultImageUrl = 'assets/hospital.jpeg';
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        margin:
+            const EdgeInsets.all(8), // Add margin for the shadow to be visible
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(
+              color: Color(0xFFEBE7E7), width: 1), // Add grey border
         ),
-        elevation: 4,
+        color: Colors.white, // Set the card background color to white
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 30,
-                    backgroundImage: imageUrl != null
-                        ? NetworkImage(imageUrl!)
-                        : NetworkImage(defaultImageUrl),
+                    backgroundImage: AssetImage('assets/doctor1.png'),
                   ),
                   const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 200, // Adjust the width as needed
-                        child: Text(
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           name.length > 20
                               ? '${name.substring(0, 20)}...'
                               : name,
                           style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
                           ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           softWrap: false,
                         ),
-                      ),
-                      Container(
-                        width: 200, // Adjust the width as needed
-                        child: Text(
+                        Text(
                           specialization.length > 20
                               ? '${specialization.substring(0, 20)}...'
                               : specialization,
-                          style: TextStyle(color: Colors.grey[700]),
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           softWrap: false,
                         ),
-                      ),
-                      // Text(
-                      //   specialization,
-                      //   style: TextStyle(color: Colors.grey[700]),
-                      // ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   Row(
@@ -95,23 +94,31 @@ class Doctor extends StatelessWidget {
                       const SizedBox(width: 5),
                       Text(
                         rating.toString(),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Implement appointment functionality here
-                      // For example, navigate to an appointment screen
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(0, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Implement appointment functionality here
+                        // For example, navigate to an appointment screen
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(0, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        'Appointment',
+                        style: TextStyle(fontFamily: 'Poppins'),
                       ),
                     ),
-                    child: const Text('Appointment'),
                   ),
                 ],
               ),

@@ -27,6 +27,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Bold.ttf
+        - asset: fonts/Poppins-Regular.ttf
   assets:
     - assets/facebook.png
     - assets/Google.webp
@@ -35,3 +40,13 @@ flutter:
     - assets/doctor2.png
     - assets/profile.png
     - assets/hospital.jpeg
+    - assets/heart.png
+    - assets/boy.png
+    - assets/tablet.png
+    - assets/all.png
+    - assets/home.png
+    - assets/calendar.png
+    - assets/message.png
+    - assets/user.png
+    - assets/menu.png
+    - assets/search.png
