@@ -6,14 +6,16 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Positioned(
       top: 0,
       left: 0,
-      right: 0,
+      width: screenWidth,
       child: Container(
         padding: EdgeInsets.symmetric(
-            vertical: screenHeight * 0.15), // Adjusted padding proportionally
+          vertical: screenHeight * 0.13,
+        ),
         decoration: const BoxDecoration(
           color: Color(0xFF73C2EF),
           borderRadius: BorderRadius.only(
@@ -27,8 +29,7 @@ class Header extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize:
-                  screenHeight * 0.06, // Adjusted font size proportionally
+              fontSize: screenHeight * 0.05,
             ),
           ),
         ),

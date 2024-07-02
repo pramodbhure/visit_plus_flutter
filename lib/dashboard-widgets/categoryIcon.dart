@@ -42,8 +42,9 @@ class CategoryIcon extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: containerSize * 0.2, // Increased font size
+            style: const TextStyle(
+              fontSize: 10, // Set font size to 10 pixels
+              color: Color(0xFF7D8BB7), // Set text color to #7D8BB7
             ),
           )
         ],

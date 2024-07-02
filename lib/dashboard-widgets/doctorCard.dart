@@ -71,8 +71,8 @@ class Doctor extends StatelessWidget {
                           specialization.length > 20
                               ? '${specialization.substring(0, 20)}...'
                               : specialization,
-                          style: TextStyle(
-                            color: Colors.grey[700],
+                          style: const TextStyle(
+                            color: Color(0xFF7D8BB7),
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                           ),
@@ -110,13 +110,18 @@ class Doctor extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(0, 40),
+                        backgroundColor: const Color(0xFFEBE7E7),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                        ),
+                        ), // Background color set to grey
                       ),
                       child: const Text(
                         'Appointment',
-                        style: TextStyle(fontFamily: 'Poppins'),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight:
+                                FontWeight.w500 // Text color set to black
+                            ),
                       ),
                     ),
                   ),

@@ -23,40 +23,40 @@ class CustomBottomNavigationBar extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
                   child: ImageIcon(
                     const AssetImage('assets/home.png'),
-                    size: 0.06 * screenWidth, // Responsive icon size
+                    size: 0.09 * screenWidth, // Responsive icon size
                   ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
                   child: ImageIcon(
                     const AssetImage('assets/calendar.png'),
-                    size: 0.06 * screenWidth, // Responsive icon size
+                    size: 0.09 * screenWidth, // Responsive icon size
                   ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
                   child: ImageIcon(
                     const AssetImage('assets/message.png'),
-                    size: 0.06 * screenWidth, // Responsive icon size
+                    size: 0.09 * screenWidth, // Responsive icon size
                   ),
                 ),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
                   child: ImageIcon(
                     const AssetImage('assets/user.png'),
-                    size: 0.06 * screenWidth, // Responsive icon size
+                    size: 0.09 * screenWidth, // Responsive icon size
                   ),
                 ),
                 label: '',

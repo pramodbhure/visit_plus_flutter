@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[200], // Blue background color
+        backgroundColor: const Color(0xFF73C2EF), // Blue background color
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             'assets/menu.png', // Replace with your menu icon asset path
             width: 24,
             height: 24,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         actions: [
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   bottomRight: Radius.circular(20),
                 ),
                 child: Container(
-                  color: Colors.blue[200],
+                  color: const Color(0xFF73C2EF),
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -177,9 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
               preferredSize:
                   const Size(0, 36), // Adjusted height to cover entire app bar
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue[200], // Blue background color
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  color: Color(0xFF73C2EF),
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20.0),
                     bottomRight: Radius.circular(20.0),
                   ),
@@ -198,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors
                               .grey, // Optionally set the color of the icon
                         ),
-                        hintText: 'Search health issue.......',
+                        hintText: 'Search ',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                           borderSide: BorderSide.none,
@@ -223,7 +223,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                     child: Text(
                       'Categories',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -250,8 +253,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           _doctors.isEmpty
-              ? SliverFillRemaining(
-                  child: const Center(child: CircularProgressIndicator()),
+              ? const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
                 )
               : SliverList(
                   delegate: SliverChildBuilderDelegate(
