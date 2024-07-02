@@ -91,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                    35, MediaQuery.of(context).size.height * 0.4, 35, 0),
+                    60, MediaQuery.of(context).size.height * 0.4, 35, 0),
                 child: Column(
                   children: <Widget>[
                     SignInForm(

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:visitplusapp/authentication-widgets/signin_screen.dart';
 import 'package:visitplusapp/reusable_widget/CustomSmoothPageIndicator.dart';
+import 'package:visitplusapp/reusable_widget/app_theme.dart';
 import 'package:visitplusapp/welcome-widgets/welcomeScreen1.dart';
 import 'package:visitplusapp/welcome-widgets/welcomeScreen2.dart';
 import 'package:visitplusapp/welcome-widgets/welcomeScreen3.dart';
@@ -33,9 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.theme, // Use the custom theme
       home: const IntroPages(),
     );
   }
@@ -45,6 +44,7 @@ class IntroPages extends StatefulWidget {
   const IntroPages({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _IntroPagesState createState() => _IntroPagesState();
 }
 

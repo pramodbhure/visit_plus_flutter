@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 
-Image logoWidget(String imageName) {
-  return Image.asset(
-    imageName,
-    fit: BoxFit.fitWidth,
-    width: 240,
-    height: 240,
-    color: Colors.white,
-  );
-}
-
 TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     TextEditingController controller) {
   return TextField(
@@ -52,8 +42,8 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
       },
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all<Color>(const Color(0xFF73C2EF)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              WidgetStateProperty.all<Color>(const Color(0xFF73C2EF)),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
       child: Text(
         title,
