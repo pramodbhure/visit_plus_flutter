@@ -9,6 +9,7 @@ class CalendarSection extends StatefulWidget {
   const CalendarSection({Key? key, required this.doctorId}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CalendarSectionState createState() => _CalendarSectionState();
 }
 
@@ -27,6 +28,8 @@ class _CalendarSectionState extends State<CalendarSection> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30),
@@ -67,7 +70,7 @@ class _CalendarSectionState extends State<CalendarSection> {
                 final currentDate = currentWeekStart.add(Duration(days: index));
                 return GestureDetector(
                   onTap: () => _selectDate(currentDate),
-                  child: _buildDateContainer(currentDate),
+                  child: _buildDateContainer(currentDate, screenWidth),
                 );
               }),
             ),
@@ -80,25 +83,35 @@ class _CalendarSectionState extends State<CalendarSection> {
               ),
             ),
             const SizedBox(height: 5),
-            Wrap(
-              spacing: 5.0,
-              runSpacing: 8.0,
-              children: [
-                _buildHourContainer('11:00AM'),
-                _buildHourContainer('12:00PM'),
-                _buildHourContainer('01:00PM'),
-                _buildHourContainer('02:00PM'),
-                _buildHourContainer('03:00PM'),
-                _buildHourContainer('04:00PM'),
-                _buildHourContainer('05:00PM'),
-                _buildHourContainer('06:00PM'),
-              ],
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 5.0,
+                childAspectRatio: 2.0,
+              ),
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                List<String> hours = [
+                  '11:00AM',
+                  '12:00PM',
+                  '01:00PM',
+                  '02:00PM',
+                  '03:00PM',
+                  '04:00PM',
+                  '05:00PM',
+                  '06:00PM'
+                ];
+                return _buildHourContainer(hours[index], screenWidth);
+              },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: const Color(0xFF73C2EF),
-                fixedSize: const Size(332, 58),
+                minimumSize: Size(screenWidth * 0.9, 58),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -137,10 +150,10 @@ class _CalendarSectionState extends State<CalendarSection> {
     );
   }
 
-  Widget _buildDateContainer(DateTime date) {
+  Widget _buildDateContainer(DateTime date, double screenWidth) {
     final isSelected = selectedDate != null && selectedDate!.day == date.day;
     return Container(
-      width: 60,
+      width: screenWidth * 0.15,
       decoration: BoxDecoration(
         color: isSelected ? const Color(0xFF73C2EF) : Colors.white,
         borderRadius: BorderRadius.circular(15.0),
@@ -173,13 +186,11 @@ class _CalendarSectionState extends State<CalendarSection> {
     );
   }
 
-  Widget _buildHourContainer(String hour) {
+  Widget _buildHourContainer(String hour, double screenWidth) {
     final isSelected = selectedVisitHour == hour;
     return GestureDetector(
       onTap: () => _selectVisitHour(hour),
       child: Container(
-        width: 76,
-        height: 36,
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFF73C2EF) : Colors.white,
           borderRadius: BorderRadius.circular(12.0),

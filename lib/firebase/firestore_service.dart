@@ -11,7 +11,7 @@ class FirestoreService {
   Future<Map<String, dynamic>?> getDoctorDetails(String doctorId) async {
     try {
       DocumentSnapshot doc =
-          await _db.collection('doctors').doc(doctorId).get();
+          await _db.collection('apiResponcedoctors').doc(doctorId).get();
       if (doc.exists) {
         return doc.data() as Map<String, dynamic>?;
       }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,14 +45,13 @@ class IntroPages extends StatefulWidget {
   const IntroPages({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _IntroPagesState createState() => _IntroPagesState();
 }
 
 class _IntroPagesState extends State<IntroPages> {
   final PageController _controller = PageController();
   bool _isLastPage = false;
-  bool isVisible = false;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -61,6 +61,27 @@ class _IntroPagesState extends State<IntroPages> {
         _isLastPage = _controller.page?.round() == 3;
       });
     });
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (_controller.page?.round() == 3) {
+        _timer?.cancel(); // Stop the timer if on the last page
+      } else {
+        _controller.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

@@ -51,7 +51,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
         rating: (doctorData?['rating'] as num?)?.toDouble() ?? 0.0,
         imageUrl: doctorData?['imageUrl'] ?? Doctor.defaultImageUrl,
         description: doctorData?['description'] ?? '',
-        address: doctorData?['address'] ?? '',
+        address: doctorData?['vicinity'] ?? '',
       );
     });
   }
@@ -87,9 +87,6 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
             specialization: _doctor!.specialization,
             appointmentTime: widget.selectedDate,
             clinicAddress: _doctor!.address,
-            paymentMode: "Pay at Clinic",
-            consultationFee: 850,
-            totalPayable: 850,
           ),
         ),
       );
@@ -107,7 +104,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     if (_doctor == null) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -129,24 +126,29 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                   child: Center(
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.purple.shade100,
-                          backgroundImage:
-                              _image != null ? FileImage(_image!) : null,
-                          child: _image == null
-                              ? const Icon(
-                                  Icons.add_photo_alternate,
-                                  color: Colors.white,
-                                  size: 40,
-                                )
-                              : null,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            width: 89,
+                            height: 93,
+                            color: const Color(0xFFEFE7FF),
+                            child: _image != null
+                                ? Image.file(
+                                    _image!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Center(
+                                    child: Text(
+                                      '  ADD\nPHOTO',
+                                      style: TextStyle(
+                                        color: Color(0xFFC3A7FD),
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                          ),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'ADD PHOTO',
-                          style: TextStyle(color: Colors.purple),
-                        ),
                       ],
                     ),
                   ),
@@ -183,40 +185,40 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 const Text(
                   'Gender',
                   style: TextStyle(fontSize: 16),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile<String>(
-                        title: const Text('Male'),
+                IntrinsicWidth(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Radio<String>(
                         value: 'male',
                         groupValue: _gender,
                         onChanged: (value) {
                           setState(() {
-                            _gender = value;
+                            _gender = value!;
                             _patientDetails.gender = value;
                           });
                         },
                       ),
-                    ),
-                    Expanded(
-                      child: RadioListTile<String>(
-                        title: const Text('Female'),
+                      const Text('Male'),
+                      const SizedBox(width: 10),
+                      Radio<String>(
                         value: 'female',
                         groupValue: _gender,
                         onChanged: (value) {
                           setState(() {
-                            _gender = value;
+                            _gender = value!;
                             _patientDetails.gender = value;
                           });
                         },
                       ),
-                    ),
-                  ],
+                      const Text('Female'),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
                 TextField(
@@ -227,7 +229,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                   maxLines: 5,
                   decoration: const InputDecoration(
                     labelText: 'Write Your Problem',
-                    prefixIcon: Icon(Icons.edit),
+                    alignLabelWithHint: true,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),

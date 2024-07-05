@@ -5,6 +5,7 @@ import 'package:visitplusapp/doctor-widgets/DoctorDetailsCard.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
   final Doctor doctor; // Change type to Doctor
+
   // ignore: use_super_parameters
   const DoctorProfileScreen({Key? key, required this.doctor}) : super(key: key);
 
@@ -12,6 +13,7 @@ class DoctorProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white, // Set the desired background color
         title: const Text(
           "Appointment",
           style: TextStyle(
@@ -35,11 +37,17 @@ class DoctorProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.asset(
-                        'assets/doctor1.png',
-                        width: 90,
-                        height: 93,
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Container(
+                        width: 89, // Adjusted width
+                        height: 93, // Adjusted height
+                        color: Colors.blue,
+                        child: Image.asset(
+                          doctor.imageUrl ??
+                              'assets/hospital.png', // Use default
+                          fit: BoxFit
+                              .cover, // Ensure the image covers the container
+                        ),
                       ),
                     ),
                   ),
@@ -78,35 +86,41 @@ class DoctorProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    RichText(
-                      text: const TextSpan(
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            height: 0.7 // Adjust lineHeight for minimal space
+                    Align(
+                      alignment: Alignment.centerLeft, // Align to the start
+                      child: RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Poppins',
+                              color: Colors.black,
+                              height: 0.7 // Adjust lineHeight for minimal space
+                              ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'About Doctor\n',
                             ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'About Doctor\n',
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF8A96BC),
-                          height: 1.2,
-                          fontFamily: 'Poppins',
+                    Align(
+                      alignment: Alignment.centerLeft, // Align to the start
+                      child: RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFF8A96BC),
+                            height: 1.2,
+                            fontFamily: 'Poppins',
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text:
+                                    'Dr. ${doctor.name} is the ${doctor.description}  health professional who practices medicine, which is concerned with promoting treatment of disease, injury, and other physical and mental impairments.'),
+                          ],
                         ),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text:
-                                  'Dr. ${doctor.name} is the ${doctor.description}'),
-                        ],
                       ),
                     ),
                   ],
