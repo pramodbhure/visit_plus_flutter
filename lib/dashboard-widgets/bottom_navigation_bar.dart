@@ -20,19 +20,19 @@ class CustomBottomNavigationBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0), // Add border radius
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white, // Set the background color to white
             borderRadius: BorderRadius.circular(30.0), // Add border radius
-            boxShadow: [
+
+            boxShadow: const [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: const Offset(0, 5), // Adjust shadow position
+                color: Color(0x4D9098C3), // #9098C329 color with opacity
+                offset: Offset(0, 0.48), // (x, y) offset
+                blurRadius: 44.12, // Blur radius
               ),
             ],
           ),
           child: Material(
-            color: Colors.white, // Set the background color to white
+            color: Colors
+                .transparent, // Set the background color to transparent to show gradient
             child: BottomNavigationBar(
               items: [
                 BottomNavigationBarItem(

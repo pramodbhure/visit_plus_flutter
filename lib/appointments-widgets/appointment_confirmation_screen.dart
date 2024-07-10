@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:visitplusapp/appointments-widgets/confirm_screen.dart';
 
 class AppointmentConfirmationScreen extends StatelessWidget {
   final String doctorName;
@@ -101,7 +102,18 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-// Handle confirm appointment
+                  // Navigate to ConfirmScreen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ConfirmScreen(
+                        doctorName: doctorName,
+                        specialization: specialization,
+                        appointmentTime: appointmentTime,
+                        clinicAddress: clinicAddress,
+                      ),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Confirm Appointment',

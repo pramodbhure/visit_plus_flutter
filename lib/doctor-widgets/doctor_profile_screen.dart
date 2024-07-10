@@ -118,7 +118,7 @@ class DoctorProfileScreen extends StatelessWidget {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    'Dr. ${doctor.name} is the ${doctor.description}  health professional who practices medicine, which is concerned with promoting treatment of disease, injury, and other physical and mental impairments.'),
+                                    'Dr. ${doctor.name} is the ${doctor.description}  health professional who practices medicine.'),
                           ],
                         ),
                       ),
