@@ -22,7 +22,7 @@ class Doctor extends StatelessWidget {
     super.key,
   });
 
-  static const String defaultImageUrl = 'assets/hospital.jpeg';
+  static const String defaultImageUrl = 'assets/profile1.png';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class Doctor extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: const BorderSide(
-              color: Color(0xFFEBE7E7), width: 1), // Add grey border
+              color: Color(0xFFE8E8E8), width: 2), // Add grey border
         ),
         color: Colors.white, // Set the card background color to white
         child: Padding(
@@ -45,9 +45,14 @@ class Doctor extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('assets/doctor1.png'),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.asset(
+                      imageUrl ?? defaultImageUrl,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(

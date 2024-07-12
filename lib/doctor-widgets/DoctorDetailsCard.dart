@@ -5,15 +5,28 @@ class DoctorDetailsCard extends StatelessWidget {
   final String text;
   final int color;
 
-  // ignore: use_super_parameters
-  const DoctorDetailsCard(
-      {Key? key, required this.number, required this.text, required this.color})
-      : super(key: key);
+  const DoctorDetailsCard({
+    Key? key,
+    required this.number,
+    required this.text,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width and height
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Define the width of the card as a fraction of the screen width
+    final cardWidth = screenWidth * 0.25;
+
+    // Define font sizes based on screen width
+    final numberFontSize = screenWidth * 0.08; // Adjust as needed
+    final textFontSize = screenWidth * 0.03; // Adjust as needed
+
     return SizedBox(
-      width: 104, // Specify the width of the card
+      width: cardWidth,
       child: Card(
         color: Colors.white,
         child: Padding(
@@ -25,7 +38,7 @@ class DoctorDetailsCard extends StatelessWidget {
               Text(
                 number,
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: numberFontSize,
                   fontWeight: FontWeight.w600,
                   color: Color(color), // Set number color
                 ),
@@ -33,10 +46,10 @@ class DoctorDetailsCard extends StatelessWidget {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: TextStyle(
+                  fontSize: textFontSize,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF8A96BC), // Set text color
+                  color: const Color(0xFF8A96BC), // Set text color
                 ),
               ),
             ],
