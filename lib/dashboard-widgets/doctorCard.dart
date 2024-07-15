@@ -4,8 +4,8 @@ class Doctor extends StatelessWidget {
   final String id;
   final String name;
   final String specialization;
-  final String description;
-  final String address;
+  final String? description;
+  final String? address;
   final double rating;
   final String? imageUrl;
   final VoidCallback? onTap;
@@ -15,8 +15,8 @@ class Doctor extends StatelessWidget {
     required this.name,
     required this.specialization,
     required this.rating,
-    required this.description,
-    required this.address,
+    this.description,
+     this.address,
     this.imageUrl,
     this.onTap,
     super.key,
