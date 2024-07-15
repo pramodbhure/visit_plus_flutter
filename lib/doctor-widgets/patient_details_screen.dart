@@ -86,7 +86,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
             doctorName: _doctor!.name,
             specialization: _doctor!.specialization,
             appointmentTime: widget.selectedDate,
-            clinicAddress: _doctor!.address,
+            clinicAddress: _doctor!.address ?? 'Clinic address not available',
           ),
         ),
       );

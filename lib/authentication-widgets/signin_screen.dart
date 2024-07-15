@@ -68,7 +68,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                latitude: position.latitude,
+                longitude: position.longitude,
+              ),
+            ),
           );
           return user;
         }
