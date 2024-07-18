@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await FirestoreService().getNearbyDoctors(
       widget.latitude,
       widget.longitude,
-      null, // Optionally pass nextPageToken if paginating
+      null,
       [],
     );
   }
@@ -104,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
         'imagePath': 'assets/boy.png',
         'label': 'Pediatrician',
       },
-      // Add more categories as needed
     ];
 
     return Scaffold(
