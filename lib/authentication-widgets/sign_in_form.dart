@@ -1,7 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:visitplusapp/reusable_widget/reusable_widget.dart';
 import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
 import 'package:visitplusapp/authentication-widgets/reset_password.dart';
@@ -15,6 +14,33 @@ class SignInForm extends StatelessWidget {
     required this.emailTextController,
     required this.passwordTextController,
   });
+
+  Future<Position?> _getUserLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return null;
+    }
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +86,28 @@ class SignInForm extends StatelessWidget {
               email: emailTextController.text,
               password: passwordTextController.text,
             );
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
+
+            Position? position = await _getUserLocation();
+            if (position != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    latitude: position.latitude,
+                    longitude: position.longitude,
+                  ),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                      "Location services are disabled or permissions are denied"),
+                  duration: Duration(seconds: 4),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
           } on FirebaseAuthException catch (e) {
             String errorMessage;
             if (e.code == 'user-not-found') {

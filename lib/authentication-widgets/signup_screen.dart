@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:visitplusapp/reusable_widget/reusable_widget.dart';
 import 'package:visitplusapp/dashboard-widgets/home_screen.dart';
 
@@ -9,7 +10,6 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
@@ -20,6 +20,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController();
   final TextEditingController _confirmPasswordTextController =
       TextEditingController();
+
+  Future<Position?> _getUserLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return null;
+    }
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +90,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 reusableTextField("Confirm Password", Icons.lock_outlined, true,
                     _confirmPasswordTextController),
                 const SizedBox(height: 20),
-                firebaseUIButton(context, "Sign Up", () {
+                firebaseUIButton(context, "Sign Up", () async {
                   // Check if any field is empty
                   if (_emailTextController.text.isEmpty ||
                       _mobileNumberTextController.text.isEmpty ||
@@ -118,22 +145,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
 
                   // Proceed with sign-up
-                  FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: _emailTextController.text,
-                    password: _passwordTextController.text,
-                  )
-                      .then((value) {
-                    print("Created New Account");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
+                  try {
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text,
                     );
-                  }).catchError((error) {
-                    if (error.code == 'email-already-in-use') {
-                      print('The account already exists for that email.');
+
+                    Position? position = await _getUserLocation();
+                    if (position != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                            latitude: position.latitude,
+                            longitude: position.longitude,
+                          ),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "Location services are disabled or permissions are denied"),
+                          duration: Duration(seconds: 4),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'email-already-in-use') {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -143,16 +183,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       );
                     } else {
-                      print("Error ${error.code}: ${error.message}");
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error: ${error.message}'),
+                          content: Text('Error: ${e.message}'),
                           duration: const Duration(seconds: 3),
                           backgroundColor: Colors.red,
                         ),
                       );
                     }
-                  });
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error: ${e.toString()}'),
+                        duration: const Duration(seconds: 4),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }),
               ],
             ),

@@ -6,8 +6,14 @@ import 'package:visitplusapp/dashboard-widgets/doctorCard.dart';
 import 'package:visitplusapp/dashboard-widgets/bottom_navigation_bar.dart';
 import 'package:visitplusapp/doctor-widgets/doctor_profile_screen.dart';
 
+import 'package:visitplusapp/firebase/firestore_service.dart'; // Ensure this import is correct
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final double latitude;
+  final double longitude;
+
+  const HomeScreen({Key? key, required this.latitude, required this.longitude})
+      : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -23,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _subscribeToDoctors();
+    _fetchNearbyDoctors();
   }
 
   @override
@@ -61,6 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<void> _fetchNearbyDoctors() async {
+    await FirestoreService().getNearbyDoctors(
+      widget.latitude,
+      widget.longitude,
+      null,
+      [],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
@@ -88,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
         'imagePath': 'assets/boy.png',
         'label': 'Pediatrician',
       },
-      // Add more categories as needed
     ];
 
     return Scaffold(
@@ -269,14 +284,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           specialization: doctor.specialization,
                           rating: doctor.rating,
                           imageUrl: doctor.imageUrl,
-                          description: doctor.description,
-                          address: doctor.address,
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      DoctorProfileScreen(doctor: doctor)),
+                                builder: (context) =>
+                                    DoctorProfileScreen(doctor: doctor),
+                              ),
                             );
                           },
                         ),
