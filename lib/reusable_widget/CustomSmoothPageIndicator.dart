@@ -9,8 +9,8 @@ class CustomPageIndicator extends StatelessWidget {
     required this.controller,
     required this.count,
     required this.isVisible,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

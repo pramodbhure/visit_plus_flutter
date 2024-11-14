@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "963373003153",
+    "firebase_url": "https://visit-plus-app-sf65u7-default-rtdb.firebaseio.com",
     "project_id": "visit-plus-app-sf65u7",
     "storage_bucket": "visit-plus-app-sf65u7.appspot.com"
   },
@@ -12,15 +13,40 @@
           "package_name": "com.example.visitplusapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "963373003153-7jm9t4tl30r9lljt0f7m0a872tkep0gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.visitplusapp",
+            "certificate_hash": "6a535436c12aa232547accfcd47a186aca10273b"
+          }
+        },
+        {
+          "client_id": "963373003153-d9duh7f50mrfo4ra51bisjcdcfe2gju3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZlXu1BOHy6z1RNa-sSeSJa5VKA1qHy-g"
+          "current_key": "AIzaSyCzcdZ06tBmiYsSIIjIBkH30N1ejHmaq24"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963373003153-d9duh7f50mrfo4ra51bisjcdcfe2gju3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "963373003153-ce3muvra5utsv31c7v2qb184ka7obdqc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.visitplusapp"
+              }
+            }
+          ]
         }
       }
     }

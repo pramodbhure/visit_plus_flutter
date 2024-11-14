@@ -9,12 +9,12 @@ class ConfirmScreen extends StatelessWidget {
   final String clinicAddress;
 
   const ConfirmScreen({
-    Key? key,
+    super.key,
     required this.doctorName,
     required this.specialization,
     required this.appointmentTime,
     required this.clinicAddress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class ConfirmScreen extends StatelessWidget {
               ),
             ),
           ),
-          CustomBottomNavigationBar(),
+          const CustomBottomNavigationBar(),
         ],
       ),
     );

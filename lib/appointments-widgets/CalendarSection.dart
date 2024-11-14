@@ -6,7 +6,7 @@ import 'package:visitplusapp/doctor-widgets/patient_details_screen.dart';
 class CalendarSection extends StatefulWidget {
   final String doctorId; // Add doctorId to constructor
 
-  const CalendarSection({Key? key, required this.doctorId}) : super(key: key);
+  const CalendarSection({super.key, required this.doctorId});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -85,7 +85,7 @@ class _CalendarSectionState extends State<CalendarSection> {
             const SizedBox(height: 5),
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 mainAxisSpacing: 8.0,
