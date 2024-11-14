@@ -31,7 +31,7 @@ class WelcomeScreen2 extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32 * scaleFactor,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF73C2EF),
+                    color: const Color(0xFF73C2EF),
                   ),
                   textAlign: TextAlign.center,
                 ),

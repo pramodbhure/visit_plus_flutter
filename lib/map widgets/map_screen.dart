@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:visitplusapp/firebase/firestore_service.dart';
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
@@ -35,6 +37,6 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     // This is a placeholder widget, it can remain as is since no UI changes are needed
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }

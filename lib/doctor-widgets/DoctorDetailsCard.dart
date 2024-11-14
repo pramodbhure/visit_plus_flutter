@@ -6,11 +6,11 @@ class DoctorDetailsCard extends StatelessWidget {
   final int color;
 
   const DoctorDetailsCard({
-    Key? key,
+    super.key,
     required this.number,
     required this.text,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
