@@ -73,23 +73,64 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
         _patientDetails.gender != null &&
         _patientDetails.problem != null &&
         _doctor != null) {
-      final firestoreService = FirestoreService();
-      await firestoreService.bookAppointment(
-        widget.selectedDate,
-        widget.selectedTime,
-        _patientDetails,
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AppointmentConfirmationScreen(
-            doctorName: _doctor!.name,
-            specialization: _doctor!.specialization,
-            appointmentTime: widget.selectedDate,
-            clinicAddress: _doctor!.address,
+      try {
+        // Parse the time from the selectedTime string
+        final timeRegex = RegExp(r'^(\d{1,2}):(\d{2})\s?(AM|PM)$');
+        final match = timeRegex.firstMatch(widget.selectedTime);
+
+        if (match == null) {
+          throw FormatException("Invalid time format: ${widget.selectedTime}");
+        }
+
+        // Extract hours, minutes, and period (AM/PM)
+        int hour = int.parse(match.group(1)!);
+        final int minute = int.parse(match.group(2)!);
+        final String period = match.group(3)!;
+
+        // Convert 12-hour time to 24-hour time
+        if (period == "PM" && hour != 12) {
+          hour += 12;
+        } else if (period == "AM" && hour == 12) {
+          hour = 0;
+        }
+
+        // Combine date and time into a single DateTime
+        final combinedDateTime = DateTime(
+          widget.selectedDate.year,
+          widget.selectedDate.month,
+          widget.selectedDate.day,
+          hour,
+          minute,
+        );
+
+        final firestoreService = FirestoreService();
+        await firestoreService.bookAppointment(
+          combinedDateTime,
+          widget.selectedTime,
+          _patientDetails,
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AppointmentConfirmationScreen(
+              doctorName: _doctor!.name,
+              specialization: _doctor!.specialization,
+              appointmentTime: combinedDateTime, // Pass combined date & time
+              clinicAddress: _doctor!.address,
+            ),
           ),
-        ),
-      );
+        );
+      } catch (e) {
+        print("Error parsing time: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid time format. Please try again.'),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
