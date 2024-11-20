@@ -102,14 +102,17 @@ class AppointmentConfirmationScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // Navigate to ConfirmScreen
+                  // Navigate to ConfirmScreen with the correct data
+                  print(
+                      "Passing Appointment Time: $appointmentTime"); // Debugging print
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ConfirmScreen(
                         doctorName: doctorName,
                         specialization: specialization,
-                        appointmentTime: appointmentTime,
+                        appointmentTime:
+                            appointmentTime, // Pass the selected time
                         clinicAddress: clinicAddress,
                       ),
                     ),
