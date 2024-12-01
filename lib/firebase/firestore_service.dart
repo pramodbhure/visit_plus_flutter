@@ -42,7 +42,24 @@ class FirestoreService {
       List<dynamic> places) async {
     final CollectionReference doctorsRef = _db.collection('apiResponcedoctors');
 
+    // Clear existing data before adding new doctors
     try {
+      // Get all documents in the collection
+      var snapshot = await doctorsRef.get();
+      // Delete each document in a batch
+      var batch = _db.batch();
+      snapshot.docs.forEach((doc) {
+        batch.delete(doc.reference);
+      });
+      // Commit the batch
+      await batch.commit();
+      print("Previous doctors data cleared from Firestore.");
+    } catch (e) {
+      print("Error clearing previous doctors data: $e");
+    }
+
+    try {
+      // Add new doctors
       for (var place in places) {
         final details = await _getPlaceDetails(place['place_id']);
 
